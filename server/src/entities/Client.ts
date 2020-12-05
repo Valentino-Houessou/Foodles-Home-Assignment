@@ -3,9 +3,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Purchase } from "./Purchase";
 
 @Entity()
 export class Client extends BaseEntity {
@@ -20,6 +22,9 @@ export class Client extends BaseEntity {
 
   @Column({ type: "decimal", default: 0.0 })
   credit!: number;
+
+  @OneToMany(() => Purchase, (purchases) => purchases.client)
+  purchases!: Purchase[];
 
   @CreateDateColumn()
   createdAt: Date;

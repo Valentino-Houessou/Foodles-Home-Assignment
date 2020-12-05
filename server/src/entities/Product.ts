@@ -3,9 +3,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Purchase } from "./Purchase";
 
 @Entity()
 export class Product extends BaseEntity {
@@ -23,6 +25,9 @@ export class Product extends BaseEntity {
 
   @Column({ unique: true })
   pictureUrl!: string;
+
+  @OneToMany(() => Purchase, (purchases) => purchases.client)
+  purchases!: Purchase[];
 
   @CreateDateColumn()
   createdAt: Date;
