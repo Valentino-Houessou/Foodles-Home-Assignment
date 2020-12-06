@@ -1,7 +1,7 @@
-import { Product } from "../../src/entities/Product";
-import { closeDBConnection, openDBConnection } from "../../src/utils/database";
-import products from "../data/products";
-import { graphQLFunc } from "../utils/graphQLFunc";
+import { Product } from "../src/entities/Product";
+import { closeDBConnection, openDBConnection } from "../src/utils/database";
+import products from "./data/products";
+import { graphQLFunc } from "./utils/graphQLFunc";
 
 beforeAll(async () => {
   await openDBConnection();
@@ -37,14 +37,12 @@ describe("product entity created", () => {
 
 describe("Get available product", () => {
   it("should return the 2 availables products", async () => {
-    const availableProducts = products.filter((p) => p.quantity > 0);
+    //const availableProducts = products.filter((p) => p.quantity > 0);
 
     const response = await graphQLFunc({
       source: getProductsQuery,
     });
 
-    expect(response).toMatchObject({
-      data: { availableProducts },
-    });
+    expect(response.data?.availableProducts.length).toBe(2);
   });
 });

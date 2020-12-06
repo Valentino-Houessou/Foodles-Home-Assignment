@@ -21,6 +21,14 @@ export class Purchase extends BaseEntity {
   @Column({ type: "int", default: 0 })
   quantity!: number;
 
+  @Field()
+  @Column()
+  clientId: number;
+
+  @Field()
+  @Column()
+  productId: number;
+
   @ManyToOne(() => Product, (product) => product.purchases)
   product!: Product;
 
