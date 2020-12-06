@@ -1,20 +1,18 @@
-import "reflect-metadata";
-import { openDBConnection } from "./utils/database";
-import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import { buildSchema } from "type-graphql";
-import { HelloResolver } from "./resolvers/hello";
+import express from "express";
+import "reflect-metadata";
 import config from "../config/common";
+import { createSchema } from "./utils/createSchema";
+import { openDBConnection } from "./utils/database";
 
 const main = async () => {
-  await openDBConnection();
+  const conn = await openDBConnection();
+
+  conn.runMigrations();
 
   const app = express();
   const apolloServer = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [HelloResolver],
-      validate: false,
-    }),
+    schema: await createSchema(),
   });
 
   apolloServer.applyMiddleware({ app });
