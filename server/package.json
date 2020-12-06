@@ -8,8 +8,9 @@
     "dev": "cd src &&  NODE_ENV=development nodemon --exec ts-node index.ts -e ts,graphql",
     "test-server": "cd src && NODE_ENV=test ts-node index.ts",
     "start": "cd src && NODE_ENV=production ts-node index.ts",
-    "test": "NODE_ENV=test jest -c jest.config.js --detectOpenHandles",
-    "test:watch": "NODE_ENV=test jest -c jest.config.js --detectOpenHandles --watchAll"
+    "testdb:setup": "NODE_ENV=test ts-node ./test/utils/setup.ts",
+    "test": "npm run testdb:setup && jest -c jest.config.js --detectOpenHandles",
+    "test:watch": "npm run testdb:setup && jest -c jest.config.js --detectOpenHandles --watchAll"
   },
   "keywords": [],
   "author": "",

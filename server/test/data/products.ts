@@ -13,4 +13,10 @@ export default [
     quantity: 15,
     pictureUrl: `${config.backend_url}images/Aiguillettes_de_poulet_au_miel_semoule_epicee_et_carottes_roties.jpg`,
   },
+  {
+    name: "Poulet coco curry ecrase patate douce",
+    price: 4.9,
+    quantity: 0,
+    pictureUrl: `${config.backend_url}images/Poulet_coco_curry_ecrase_patate_douce.jpg`,
+  },
 ];
