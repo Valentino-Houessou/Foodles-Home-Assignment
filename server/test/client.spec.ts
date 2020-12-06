@@ -1,7 +1,7 @@
-import { closeDBConnection, openDBConnection } from "../../src/utils/database";
-import { Client } from "../../src/entities/Client";
-import clients from "../data/clients";
-import { graphQLFunc } from "../utils/graphQLFunc";
+import { closeDBConnection, openDBConnection } from "../src/utils/database";
+import { Client } from "../src/entities/Client";
+import clients from "./data/clients";
+import { graphQLFunc } from "./utils/graphQLFunc";
 
 beforeAll(async () => {
   await openDBConnection();
