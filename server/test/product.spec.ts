@@ -1,3 +1,4 @@
+import { MoreThan } from "typeorm";
 import { Product } from "../src/entities/Product";
 import { closeDBConnection, openDBConnection } from "../src/utils/database";
 import products from "./data/products";
@@ -10,7 +11,7 @@ afterAll(async () => {
   await closeDBConnection();
 });
 
-const data = products[0];
+const data = products[2];
 
 const getProductsQuery = `
 query getAvailableProduct{
@@ -37,10 +38,12 @@ describe("product entity created", () => {
 
 describe("Get available product", () => {
   it("should return the 2 availables products", async () => {
+    const products = await Product.find({ where: { quantity: MoreThan(0) } });
+
     const response = await graphQLFunc({
       source: getProductsQuery,
     });
 
-    expect(response.data?.availableProducts.length).toBe(2);
+    expect(response.data?.availableProducts.length).toBe(products.length);
   });
 });
