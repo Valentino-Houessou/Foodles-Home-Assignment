@@ -9,7 +9,7 @@ import path from "path";
 const main = async () => {
   const conn = await openDBConnection();
 
-  conn.runMigrations();
+  await conn.runMigrations();
 
   const app = express();
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "tsc -w",
-    "dev": "cd src &&  NODE_ENV=development nodemon --exec ts-node index.ts -e ts,graphql",
+    "dev": "cd src && NODE_ENV=development nodemon --exec ts-node index.ts -e ts,graphql",
     "test-server": "cd src && NODE_ENV=test ts-node index.ts",
     "start": "cd src && NODE_ENV=production ts-node index.ts",
     "testdb:setup": "NODE_ENV=test ts-node ./test/utils/setup.ts",
