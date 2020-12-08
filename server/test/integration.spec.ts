@@ -13,9 +13,7 @@ afterAll(async () => {
 
 const purchaseMutation = `
 mutation processPurchase($input: PurchaseInput!) {
-  processPurchase(input: $input){
-    id,
-  }
+  processPurchase(input: $input)
 }
 
 `;
@@ -36,12 +34,11 @@ describe("User by the last available product, and that product isn't available a
   it("should proceed the purchase and return only on product", async () => {
     const clientId = 3,
       productId = 1,
-      purchasedQuantity = 3;
+      purchasedQuantity = 2;
 
     const input: PurchaseInput = {
       clientId,
-      productId,
-      quantity: purchasedQuantity,
+      productsQuantities: [{ productId, quantity: purchasedQuantity }],
     };
 
     const purchaseResponse = await graphQLFunc({
@@ -49,7 +46,7 @@ describe("User by the last available product, and that product isn't available a
       variableValues: { input },
     });
 
-    expect(purchaseResponse).toBeDefined();
+    expect(purchaseResponse.data?.processPurchase).toBeTruthy();
 
     const products = await Product.find({ where: { quantity: MoreThan(0) } });
     const productResponse = await graphQLFunc({

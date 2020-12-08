@@ -6,41 +6,57 @@ import { PurchaseInput } from "./purchaseInput";
 
 @Resolver()
 export class PurchaseResolver {
-  @Mutation(() => Purchase, { nullable: true })
+  @Mutation(() => Boolean)
   async processPurchase(
     @Arg("input") input: PurchaseInput,
-  ): Promise<Purchase | undefined> {
-    const purchase = await Purchase.create(input);
-    const client = await Client.findOne(input.clientId);
-    const product = await Product.findOne(input.productId);
+  ): Promise<boolean | undefined> {
+    const { clientId, productsQuantities } = input;
 
-    let price = 0,
-      productQuantity = 0,
-      credit = 0;
-    const purchaseQuantity = input.quantity;
+    const client = await Client.findOne(clientId);
 
-    if (client) {
+    if (!client) {
+      return false;
+    }
+
+    const credit = client.credit;
+    let cost = 0;
+
+    for (let index = 0; index < productsQuantities.length; index += 1) {
+      const { productId, quantity: purchasedQuantity } = productsQuantities[
+        index
+      ];
+
+      const purchase = await Purchase.create({
+        clientId,
+        productId,
+        quantity: purchasedQuantity,
+      });
+      const product = await Product.findOne(productId);
+
+      let price = 0,
+        productQuantity = 0;
+
       purchase.client = client;
-      credit = client.credit;
+
+      if (product) {
+        purchase.product = product;
+        price = product.price;
+        productQuantity = product.quantity;
+      }
+      purchase.save();
+
+      cost = cost + purchasedQuantity * price;
+
+      await Product.update(
+        { id: productId },
+        {
+          quantity: productQuantity - purchasedQuantity,
+        },
+      );
     }
-    if (product) {
-      purchase.product = product;
-      price = product.price;
-      productQuantity = product.quantity;
-    }
-    purchase.save();
 
-    const cost = purchaseQuantity * price;
+    await Client.update({ id: clientId }, { credit: credit - cost });
 
-    await Client.update({ id: input.clientId }, { credit: credit - cost });
-
-    await Product.update(
-      { id: input.productId },
-      {
-        quantity: productQuantity - purchaseQuantity,
-      },
-    );
-
-    return purchase;
+    return true;
   }
 }

@@ -1,7 +1,7 @@
 import { Purchase } from "../src/entities/Purchase";
 import { closeDBConnection, openDBConnection } from "../src/utils/database";
 import { graphQLFunc } from "./utils/graphQLFunc";
-import { PurchaseInput } from "../src/resolvers/purchaseInput";
+import { PurchaseInput, ProductQuantity } from "../src/resolvers/purchaseInput";
 import { Client } from "../src/entities/Client";
 import { Product } from "../src/entities/Product";
 
@@ -14,9 +14,7 @@ afterAll(async () => {
 
 const purchaseMutation = `
 mutation processPurchase($input: PurchaseInput!) {
-  processPurchase(input: $input){
-    id,
-  }
+  processPurchase(input: $input)
 }
 
 `;
@@ -27,21 +25,44 @@ describe("purchases created", () => {
   });
 });
 
+describe("purchase with wrong client id", () => {
+  it("should return false", async () => {
+    const input: PurchaseInput = {
+      clientId: 0,
+      productsQuantities: [{ productId: 1, quantity: 1 }],
+    };
+
+    const response = await graphQLFunc({
+      source: purchaseMutation,
+      variableValues: { input },
+    });
+
+    expect(response.data?.processPurchase).toBeFalsy();
+  });
+});
+
 describe("purchase proceed well", () => {
   it("should save the purchase and update client credit and product quantity", async () => {
-    const clientId = 3,
-      productId = 2;
-    const prevClient = await Client.findOne(clientId);
-    const prevProduct = await Product.findOne(productId);
+    const clientId = 3;
 
-    const purchasedQuantity = 1,
-      previousCredit = prevClient ? prevClient.credit : 0,
-      previousQuantity = prevProduct ? prevProduct.quantity : 0;
+    const prevClient = await Client.findOne(clientId);
+    const productsId = [1, 2];
+    const prevProducts = await Promise.all(
+      productsId.map(async (productId) => await Product.findOne(productId)),
+    );
+
+    const purchasedQuanties = [1, 2];
+    const productsQuantities = prevProducts.map(
+      (product, index) =>
+        ({
+          productId: product?.id,
+          quantity: purchasedQuanties[index],
+        } as ProductQuantity),
+    );
 
     const input: PurchaseInput = {
       clientId,
-      productId,
-      quantity: purchasedQuantity,
+      productsQuantities,
     };
 
     const response = await graphQLFunc({
@@ -50,17 +71,29 @@ describe("purchase proceed well", () => {
     });
 
     const currentClient = await Client.findOne(clientId);
-    const currentProduct = await Product.findOne(productId);
+    const currentProducts = await Promise.all(
+      [1, 2].map(async (productId) => await Product.findOne(productId)),
+    );
 
-    const currentCredit = currentClient ? currentClient.credit : 0;
-    const currentQuantity = currentProduct ? currentProduct.quantity : 0;
-    const currentPrice = currentProduct ? currentProduct.price : 0;
+    const currentCredit = currentClient?.credit;
 
-    const cost = currentPrice * purchasedQuantity;
+    const cost = currentProducts.reduce(
+      (acc, product, index) =>
+        acc + (product?.price || 0) * purchasedQuanties[index],
+      0,
+    );
+    const prevCredit = prevClient?.credit || 0;
 
-    expect(response).toBeDefined();
-    expect(currentCredit).toBe((previousCredit - cost).toString());
-    expect(currentQuantity).toBe(previousQuantity - purchasedQuantity);
-    expect(previousQuantity - purchasedQuantity).toBeGreaterThanOrEqual(0);
+    expect(response.data?.processPurchase).toBeTruthy();
+    expect(currentCredit).toBe((prevCredit - cost).toString());
+
+    currentProducts.forEach((product, index) => {
+      const prevProductQuantity = prevProducts[index]?.quantity || 0,
+        purchasedQuantity = purchasedQuanties[index] || 0;
+      const currentQuantity = prevProductQuantity - purchasedQuantity;
+
+      expect(product?.quantity).toBe(currentQuantity);
+      expect(currentQuantity).toBeGreaterThanOrEqual(0);
+    });
   });
 });
