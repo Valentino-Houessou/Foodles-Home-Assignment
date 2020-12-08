@@ -34,15 +34,6 @@ describe("client entity created", () => {
 });
 
 describe("search client by name", () => {
-  it("should return an empty array", async () => {
-    const response = await graphQLFunc({
-      source: searchQuery,
-      variableValues: { name: "" },
-    });
-
-    expect(response).toMatchObject({ data: { searchByName: [] } });
-  });
-
   it("should return an array with one element which name is odin", async () => {
     const client = clients.find((c) => c.name == "Odin");
 

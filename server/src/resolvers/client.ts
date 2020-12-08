@@ -9,8 +9,6 @@ export class ClientResolver {
     @Arg("name") name: string,
     @Arg("limit", { defaultValue: 5 }) limit: number,
   ): Promise<Client[] | undefined> {
-    if (!name) return [];
-
     const searchQuery = getConnection()
       .getRepository(Client)
       .createQueryBuilder("l")
