@@ -1,0 +1,9 @@
+query AvailableProduct{
+  availableProducts{
+    id,
+    name,
+    price,
+    quantity,
+    pictureUrl
+  }
+}

@@ -1,0 +1,8 @@
+query SearchClient($name: String!, $limit: Float){
+  searchByName(name:$name, limit:$limit){
+    id,
+    name,
+    email,
+    credit
+  }
+}

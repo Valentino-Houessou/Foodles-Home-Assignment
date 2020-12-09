@@ -1,0 +1,3 @@
+mutation ProcessPurchase($input: PurchaseInput!) {
+  processPurchase(input: $input)
+}
