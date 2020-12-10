@@ -3,6 +3,7 @@ import { AppProps } from "next/app";
 import { createClient, Provider } from "urql";
 import { ContextProvider } from "../components/ContextProvider";
 import theme from "../theme";
+import "../styles/imageOverlay.css";
 
 const client = createClient({
   url: "http://localhost:4000/graphql",
