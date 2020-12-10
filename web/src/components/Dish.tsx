@@ -2,8 +2,8 @@ import { Box, Flex, Icon, IconButton, Img } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { BiDownload, BiMinus, BiPlus } from "react-icons/bi";
 import { CartDispatchType, DishType } from "../utils/types";
-import { useCart, useCartDispatch } from "./CartProvider";
-import { useUser } from "./UserProvider";
+import { useCart, useCartDispatch } from "./providers/CartProvider";
+import { useUser } from "./providers/UserProvider";
 
 interface DishProps {
   product: DishType;

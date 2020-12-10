@@ -3,7 +3,7 @@ import AsyncSelect from "react-select/async";
 import { useClient } from "urql";
 import { SearchClientDocument } from "../generated/graphql";
 import { mapOptions } from "../utils/mapOptions";
-import { useSetUser } from "./UserProvider";
+import { useSetUser } from "./providers/UserProvider";
 
 interface SearchBarProps {}
 

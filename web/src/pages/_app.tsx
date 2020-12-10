@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 import { createClient, Provider } from "urql";
-import { ContextProvider } from "../components/ContextProvider";
+import { ContextProvider } from "../components/providers/ContextProvider";
 import theme from "../theme";
 import "../styles/imageOverlay.css";
 

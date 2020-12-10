@@ -1,5 +1,5 @@
 import React, { createContext, Dispatch, useContext, useReducer } from "react";
-import { Action, CartDispatchType, ItemData } from "../utils/types";
+import { Action, CartDispatchType, ItemData } from "../../utils/types";
 
 const CartStateContext = createContext(new Map<number, ItemData>());
 const CartDispatchContext = createContext<Dispatch<Action> | undefined>(
