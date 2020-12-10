@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, IconButton, Img, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, IconButton, Img } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { BiDownload, BiMinus, BiPlus } from "react-icons/bi";
 import { CartDispatchType, DishType } from "../utils/types";
@@ -17,6 +17,7 @@ export const Dish: React.FC<DishProps> = ({ product }) => {
   const cartDispatch = useCartDispatch()!;
 
   const connected = () => user.hasOwnProperty("value");
+  const available = () => dishQuantity > 0;
   const inCart = () => cart.has(id);
   const addToCart = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setDishQuantity(dishQuantity - 1);
@@ -25,9 +26,25 @@ export const Dish: React.FC<DishProps> = ({ product }) => {
       payload: { id, price, quantity: 1 },
     });
   };
+  const increaseIntoCart = (
+    _: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    setDishQuantity(dishQuantity - 1);
+    cartDispatch({
+      type: CartDispatchType.INCREASE,
+      payload: { id },
+    });
+  };
 
-  console.log(cart);
-  console.log(inCart());
+  const decreaseFromCart = (
+    _: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    setDishQuantity(dishQuantity + 1);
+    cartDispatch({
+      type: CartDispatchType.DECREASE,
+      payload: { id },
+    });
+  };
 
   return (
     <Box width="13em" borderRadius="lg" overflow="hidden">
@@ -69,6 +86,7 @@ export const Dish: React.FC<DishProps> = ({ product }) => {
                   borderRadius={4}
                   _hover={{ opacity: "0.5" }}
                   aria-label="retrieve from cart"
+                  onClick={decreaseFromCart}
                   icon={<Icon w={5} h={5} color="#ff9699" as={BiMinus} />}
                 />
               </Box>
@@ -79,7 +97,9 @@ export const Dish: React.FC<DishProps> = ({ product }) => {
                 h={7}
                 borderRadius={4}
                 _hover={{ opacity: "0.5" }}
-                aria-label="Add to cart"
+                aria-label="Increase to cart"
+                onClick={increaseIntoCart}
+                isDisabled={!available()}
                 icon={<Icon w={5} h={5} color="#016765" as={BiPlus} />}
               />
             </Flex>
