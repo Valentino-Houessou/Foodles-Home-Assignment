@@ -1,23 +1,45 @@
-import { Box, Flex, IconButton, Icon, Image } from "@chakra-ui/react";
-import React from "react";
-import { useState } from "react";
-import { BiMinus, BiPlus, BiDownload } from "react-icons/bi";
-import { DishType } from "../utils/types";
+import { Box, Flex, Icon, IconButton, Img, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { BiDownload, BiMinus, BiPlus } from "react-icons/bi";
+import { CartDispatchType, DishType } from "../utils/types";
+import { useCart, useCartDispatch } from "./CartProvider";
+import { useUser } from "./UserProvider";
 
 interface DishProps {
   product: DishType;
 }
 
 export const Dish: React.FC<DishProps> = ({ product }) => {
-  const [addToCart, setAddToCart] = useState(false);
-  const { pictureUrl, name, price } = product;
+  const { id, pictureUrl, name, price, quantity } = product;
+  const user = useUser();
+  const cart = useCart();
+  const [dishQuantity, setDishQuantity] = useState(quantity);
+  const cartDispatch = useCartDispatch()!;
+
+  const connected = () => user.hasOwnProperty("value");
+  const inCart = () => cart.has(id);
+  const addToCart = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setDishQuantity(dishQuantity - 1);
+    cartDispatch({
+      type: CartDispatchType.ADD,
+      payload: { id, price, quantity: 1 },
+    });
+  };
+
+  console.log(cart);
+  console.log(inCart());
 
   return (
     <Box width="13em" borderRadius="lg" overflow="hidden">
-      <Image src={pictureUrl} alt={name} />
+      <Box className="container">
+        <Img src={pictureUrl} alt={name} className="image" width="100%" />
+        <Box className={`overlay ${inCart() && "incart"}`}>
+          {inCart() ? cart.get(id)?.quantity : ""}
+        </Box>
+      </Box>
       <Box p="5" bg="white">
         <Box
-          mt="1"
+          mt={1}
           fontWeight="semibold"
           as="h4"
           lineHeight="tight"
@@ -30,7 +52,6 @@ export const Dish: React.FC<DishProps> = ({ product }) => {
           fontWeight="semibold"
           letterSpacing="wide"
           fontSize="0.9em"
-          textTransform="uppercase"
         >
           {new Intl.NumberFormat("fr-FR", {
             style: "currency",
@@ -38,7 +59,7 @@ export const Dish: React.FC<DishProps> = ({ product }) => {
           }).format(price)}
         </Box>
         <Flex justify="flex-end">
-          {addToCart ? (
+          {inCart() ? (
             <Flex>
               <Box mr="2">
                 <IconButton
@@ -70,6 +91,8 @@ export const Dish: React.FC<DishProps> = ({ product }) => {
               borderRadius={4}
               _hover={{ opacity: "0.5" }}
               aria-label="Add to cart"
+              isDisabled={!connected()}
+              onClick={addToCart}
               icon={<Icon w={5} h={5} color="#016765" as={BiDownload} />}
             />
           )}

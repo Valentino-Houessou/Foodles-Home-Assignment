@@ -1,11 +1,9 @@
 import { Box, Text } from "@chakra-ui/react";
 import { Dish } from "../components/Dish";
 import { NavBar } from "../components/NavBar";
-import { useUser } from "../components/UserProvider";
 import { DishType } from "../utils/types";
 
 const Index = () => {
-  const user = useUser();
   const product: DishType = {
     id: 1,
     pictureUrl:
