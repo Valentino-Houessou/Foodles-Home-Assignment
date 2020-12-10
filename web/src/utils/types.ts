@@ -7,8 +7,8 @@ export type DishType = Pick<
 
 export interface ItemData {
   id: number;
-  price: number;
-  quantity: number;
+  price?: number;
+  quantity?: number;
 }
 
 export enum CartDispatchType {

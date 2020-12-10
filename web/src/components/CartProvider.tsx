@@ -14,13 +14,13 @@ const reducer = (state: Map<number, ItemData>, action: Action) => {
     case CartDispatchType.ADD:
       return state.set(id, action.payload);
     case CartDispatchType.INCREASE:
-      if (item) {
+      if (item && item.quantity) {
         item.quantity += 1;
         state.set(id, item);
       }
       return state;
     case CartDispatchType.DECREASE:
-      if (item && item.quantity > 1) {
+      if (item && item.quantity && item.quantity > 1) {
         item.quantity -= 1;
         state.set(id, item);
       } else {
