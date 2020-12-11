@@ -1,7 +1,7 @@
 import React, { createContext, Dispatch, useContext, useReducer } from "react";
 import { Action, CartDispatchType, ItemData } from "../../utils/types";
 
-const CartStateContext = createContext(new Map<number, ItemData>());
+export const CartStateContext = createContext(new Map<number, ItemData>());
 const CartDispatchContext = createContext<Dispatch<Action> | undefined>(
   undefined
 );
@@ -12,13 +12,14 @@ const reducer = (state: Map<number, ItemData>, action: Action) => {
 
   switch (action.type) {
     case CartDispatchType.ADD:
-      return state.set(id, action.payload);
+      state.set(id, action.payload);
+      return new Map([...state]);
     case CartDispatchType.INCREASE:
       if (item && item.quantity) {
         item.quantity += 1;
         state.set(id, item);
       }
-      return state;
+      return new Map([...state]);
     case CartDispatchType.DECREASE:
       if (item && item.quantity && item.quantity > 1) {
         item.quantity -= 1;
@@ -26,7 +27,7 @@ const reducer = (state: Map<number, ItemData>, action: Action) => {
       } else {
         state.delete(id);
       }
-      return state;
+      return new Map([...state]);
     default:
       throw new Error(`Unknown action: ${action.type}`);
   }
