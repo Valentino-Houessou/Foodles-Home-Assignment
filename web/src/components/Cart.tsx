@@ -3,13 +3,14 @@ import React, { Fragment } from "react";
 import { BiBasket } from "react-icons/bi";
 import {
   PurchaseInput,
-  useProcessPurchaseMutation
+  useProcessPurchaseMutation,
 } from "../generated/graphql";
 import { formatPrice } from "../utils/formatPrice";
 import { mapCartToPurchases } from "../utils/mapCartToPurchases";
 import { CartDispatchType, ItemData } from "../utils/types";
 import { useCart, useCartDispatch } from "./providers/CartProvider";
 import { useUser } from "./providers/UserProvider";
+import { useSetIsProcessed } from "./providers/isProcessedProvider";
 
 interface CartProps {}
 
@@ -18,6 +19,7 @@ export const Cart: React.FC<CartProps> = ({}) => {
   const user = useUser()!;
   const cartDispatch = useCartDispatch()!;
   const [{}, processPurchase] = useProcessPurchaseMutation();
+  const setIsProcessed = useSetIsProcessed()!;
 
   const total = () =>
     [...cart.entries()].reduce((acc: number, item: [number, ItemData]) => {
@@ -39,6 +41,7 @@ export const Cart: React.FC<CartProps> = ({}) => {
     cartDispatch({
       type: CartDispatchType.CLEAR,
     });
+    setIsProcessed(true);
   };
 
   return (
