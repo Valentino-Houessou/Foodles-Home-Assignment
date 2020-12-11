@@ -53,7 +53,7 @@ export const Dish: React.FC<DishProps> = ({ product }) => {
   };
 
   return (
-    <Box width="13em" borderRadius="lg" overflow="hidden">
+    <Box width="13em" borderRadius="lg" overflow="hidden" mr="1em">
       <DishPicture dish={{ id, pictureUrl, name }} />
       <Box p="5" bg="white">
         <DishName name={name} />
