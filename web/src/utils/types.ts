@@ -1,3 +1,4 @@
+import { IconType } from "react-icons";
 import { Product } from "../generated/graphql";
 
 export type DishType = Pick<
@@ -20,4 +21,13 @@ export enum CartDispatchType {
 export interface Action {
   type: CartDispatchType;
   payload: ItemData;
+}
+
+export interface CustomIconButtonType {
+  handleClick: (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  bgColor: string;
+  ariaLabel: string;
+  icon: IconType;
+  iconColor: string;
+  isDisable?: boolean;
 }

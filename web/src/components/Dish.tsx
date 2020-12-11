@@ -1,7 +1,11 @@
-import { Box, Flex, Icon, IconButton, Img } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { BiDownload, BiMinus, BiPlus } from "react-icons/bi";
 import { CartDispatchType, DishType } from "../utils/types";
+import { CustomIconButton } from "./CustomIconButton";
+import { DishName } from "./dish/DishName";
+import { DishPicture } from "./dish/DishPicture";
+import { DishPrice } from "./dish/DishPrice";
 import { useCart, useCartDispatch } from "./providers/CartProvider";
 import { useUser } from "./providers/UserProvider";
 
@@ -19,6 +23,7 @@ export const Dish: React.FC<DishProps> = ({ product }) => {
   const connected = () => user.hasOwnProperty("value");
   const available = () => dishQuantity > 0;
   const inCart = () => cart.has(id);
+
   const addToCart = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setDishQuantity(dishQuantity - 1);
     cartDispatch({
@@ -26,6 +31,7 @@ export const Dish: React.FC<DishProps> = ({ product }) => {
       payload: { id, price, quantity: 1 },
     });
   };
+
   const increaseIntoCart = (
     _: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -48,72 +54,46 @@ export const Dish: React.FC<DishProps> = ({ product }) => {
 
   return (
     <Box width="13em" borderRadius="lg" overflow="hidden">
-      <Box className="container">
-        <Img src={pictureUrl} alt={name} className="image" width="100%" />
-        <Box className={`overlay ${inCart() && "incart"}`}>
-          {inCart() ? cart.get(id)?.quantity : ""}
-        </Box>
-      </Box>
+      <DishPicture dish={{ id, pictureUrl, name }} />
       <Box p="5" bg="white">
-        <Box
-          mt={1}
-          fontWeight="semibold"
-          as="h4"
-          lineHeight="tight"
-          noOfLines={2}
-        >
-          {name}
-        </Box>
-        <Box
-          color="#828286"
-          fontWeight="semibold"
-          letterSpacing="wide"
-          fontSize="0.9em"
-        >
-          {new Intl.NumberFormat("fr-FR", {
-            style: "currency",
-            currency: "EUR",
-          }).format(price)}
-        </Box>
+        <DishName name={name} />
+        <DishPrice price={price} />
         <Flex justify="flex-end">
           {inCart() ? (
             <Flex>
               <Box mr="2">
-                <IconButton
-                  bg="fairPink"
-                  minW={7}
-                  h={7}
-                  borderRadius={4}
-                  _hover={{ opacity: "0.5" }}
-                  aria-label="retrieve from cart"
-                  onClick={decreaseFromCart}
-                  icon={<Icon w={5} h={5} color="#ff9699" as={BiMinus} />}
+                <CustomIconButton
+                  buttonIconData={{
+                    bgColor: "fairPink",
+                    ariaLabel: "retrieve from cart",
+                    handleClick: decreaseFromCart,
+                    iconColor: "#ff9699",
+                    icon: BiMinus,
+                  }}
                 />
               </Box>
 
-              <IconButton
-                bg="powderBlue"
-                minW={7}
-                h={7}
-                borderRadius={4}
-                _hover={{ opacity: "0.5" }}
-                aria-label="Increase to cart"
-                onClick={increaseIntoCart}
-                isDisabled={!available()}
-                icon={<Icon w={5} h={5} color="#016765" as={BiPlus} />}
+              <CustomIconButton
+                buttonIconData={{
+                  bgColor: "powderBlue",
+                  ariaLabel: "Increase to cart",
+                  handleClick: increaseIntoCart,
+                  iconColor: "#016765",
+                  icon: BiPlus,
+                  isDisable: !available(),
+                }}
               />
             </Flex>
           ) : (
-            <IconButton
-              bg="powderBlue"
-              minW={7}
-              h={7}
-              borderRadius={4}
-              _hover={{ opacity: "0.5" }}
-              aria-label="Add to cart"
-              isDisabled={!connected()}
-              onClick={addToCart}
-              icon={<Icon w={5} h={5} color="#016765" as={BiDownload} />}
+            <CustomIconButton
+              buttonIconData={{
+                bgColor: "powderBlue",
+                ariaLabel: "Add to cart",
+                handleClick: addToCart,
+                iconColor: "#016765",
+                icon: BiDownload,
+                isDisable: !connected(),
+              }}
             />
           )}
         </Flex>
