@@ -1,5 +1,6 @@
 import { Box, Center, Flex, Spacer } from "@chakra-ui/react";
 import React from "react";
+import { Cart } from "./Cart";
 import { SearchBar } from "./SearchBar";
 
 interface NavBarProps {}
@@ -12,7 +13,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
       </Box>
       <Spacer />
       <Center>
-        <Box>Basket</Box>
+        <Cart />
       </Center>
     </Flex>
   );
