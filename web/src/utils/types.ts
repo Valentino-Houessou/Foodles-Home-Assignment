@@ -16,11 +16,12 @@ export enum CartDispatchType {
   ADD = "ADD_TO_CART",
   INCREASE = "INCREASE_QUANTITY",
   DECREASE = "DECREASE_QUANTITY",
+  CLEAR = "REMOVE_ALL"
 }
 
 export interface Action {
   type: CartDispatchType;
-  payload: ItemData;
+  payload?: ItemData;
 }
 
 export interface CustomIconButtonType {

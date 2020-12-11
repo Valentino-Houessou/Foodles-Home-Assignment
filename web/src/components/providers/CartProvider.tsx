@@ -7,27 +7,34 @@ const CartDispatchContext = createContext<Dispatch<Action> | undefined>(
 );
 
 const reducer = (state: Map<number, ItemData>, action: Action) => {
-  const { id } = action.payload;
-  const item = state.get(id);
+  let id, item;
+  if (action.payload) {
+    id = action.payload.id;
+    item = state.get(id);
+  }
 
   switch (action.type) {
     case CartDispatchType.ADD:
-      state.set(id, action.payload);
+      if (id && action.payload) {
+        state.set(id, action.payload);
+      }
       return new Map([...state]);
     case CartDispatchType.INCREASE:
-      if (item && item.quantity) {
+      if (id && item && item.quantity) {
         item.quantity += 1;
         state.set(id, item);
       }
       return new Map([...state]);
     case CartDispatchType.DECREASE:
-      if (item && item.quantity && item.quantity > 1) {
+      if (id && item && item.quantity && item.quantity > 1) {
         item.quantity -= 1;
         state.set(id, item);
-      } else {
+      } else if (id) {
         state.delete(id);
       }
       return new Map([...state]);
+    case CartDispatchType.CLEAR:
+      return new Map<number, ItemData>();
     default:
       throw new Error(`Unknown action: ${action.type}`);
   }
