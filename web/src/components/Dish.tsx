@@ -11,8 +11,9 @@ interface DishProps {
 }
 
 export const Dish: React.FC<DishProps> = ({ product }) => {
-  const { name, price } = product;
+  const { name, price, quantity } = product;
 
+  console.log(quantity);
   return (
     <Box width="13em" borderRadius="lg" overflow="hidden" mr="1em">
       <DishPicture dish={product} />
