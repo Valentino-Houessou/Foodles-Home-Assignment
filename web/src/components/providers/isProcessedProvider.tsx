@@ -5,10 +5,11 @@ import React, {
   useContext,
   useState,
 } from "react";
+import { CartStatus } from "../../utils/types";
 
-const IsProcessedContext = createContext<boolean>(false);
+const IsProcessedContext = createContext<CartStatus>(CartStatus.WILL_PROCESS);
 const SetIsProcessedContext = createContext<
-  Dispatch<SetStateAction<boolean>> | undefined
+  Dispatch<SetStateAction<CartStatus>> | undefined
 >(undefined);
 
 interface IsProcessedProviderProps {}
@@ -16,7 +17,7 @@ interface IsProcessedProviderProps {}
 export const IsProcessedProvider: React.FC<IsProcessedProviderProps> = ({
   children,
 }) => {
-  const [isProcessed, setIsProcessed] = useState(false);
+  const [isProcessed, setIsProcessed] = useState(CartStatus.WILL_PROCESS);
 
   return (
     <SetIsProcessedContext.Provider value={setIsProcessed}>

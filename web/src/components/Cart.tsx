@@ -7,7 +7,7 @@ import {
 } from "../generated/graphql";
 import { formatPrice } from "../utils/formatPrice";
 import { mapCartToPurchases } from "../utils/mapCartToPurchases";
-import { CartDispatchType, ItemData } from "../utils/types";
+import { CartDispatchType, CartStatus, ItemData } from "../utils/types";
 import { useCart, useCartDispatch } from "./providers/CartProvider";
 import { useUser } from "./providers/UserProvider";
 import { useSetIsProcessed } from "./providers/isProcessedProvider";
@@ -41,7 +41,7 @@ export const Cart: React.FC<CartProps> = ({}) => {
     cartDispatch({
       type: CartDispatchType.CLEAR,
     });
-    setIsProcessed(true);
+    setIsProcessed(CartStatus.PROCESSED_CART);
   };
 
   return (

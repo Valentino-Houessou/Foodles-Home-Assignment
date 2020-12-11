@@ -16,7 +16,7 @@ export enum CartDispatchType {
   ADD = "ADD_TO_CART",
   INCREASE = "INCREASE_QUANTITY",
   DECREASE = "DECREASE_QUANTITY",
-  CLEAR = "REMOVE_ALL"
+  CLEAR = "REMOVE_ALL",
 }
 
 export interface Action {
@@ -36,4 +36,15 @@ export interface CustomIconButtonType {
 export interface User {
   id: number;
   info: string;
+}
+
+export enum CartStatus {
+  WILL_PROCESS = "WILL PROCESS",
+  PROCESSED_CART = "PROCESSED",
+  UPDATED_DISHES = "UPDATED_DISHES",
+}
+
+export interface SelectOption {
+  value: number;
+  label: string;
 }
