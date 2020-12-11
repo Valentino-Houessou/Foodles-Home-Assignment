@@ -14,7 +14,7 @@ const theme = extendTheme({
   colors: {
     black: "#16161D",
     fairPink: "#ffe9ea",
-    powderBLue: "#b8e5e9",
+    powderBlue: "#b8e5e9",
   },
   fonts,
   breakpoints,

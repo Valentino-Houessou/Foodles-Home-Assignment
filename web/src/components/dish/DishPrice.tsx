@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
+import { formatPrice } from "../../utils/formatPrice";
 
 interface DishPriceProps {
   price: number;
@@ -13,10 +14,7 @@ export const DishPrice: React.FC<DishPriceProps> = ({ price }) => {
       letterSpacing="wide"
       fontSize="0.9em"
     >
-      {new Intl.NumberFormat("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      }).format(price)}
+      {formatPrice(price)}
     </Box>
   );
 };
