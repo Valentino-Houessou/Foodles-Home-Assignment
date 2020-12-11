@@ -5,16 +5,17 @@ import React, {
   useContext,
   useState,
 } from "react";
+import { User } from "../../utils/types";
 
-const UserContext = createContext({});
-const SetUserContext = createContext<Dispatch<SetStateAction<{}>> | undefined>(
-  undefined
-);
+const UserContext = createContext<User | undefined>(undefined);
+const SetUserContext = createContext<
+  Dispatch<SetStateAction<User>> | undefined
+>(undefined);
 
 interface UserProviderProps {}
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({} as User);
 
   return (
     <SetUserContext.Provider value={setUser}>

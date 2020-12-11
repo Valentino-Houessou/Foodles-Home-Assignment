@@ -13,14 +13,14 @@ interface DishButtonsProps {
 
 export const DishButtons: React.FC<DishButtonsProps> = ({ dish }) => {
   const { id, quantity, price } = dish;
-  const user = useUser();
+  const user = useUser()!;
   const cart = useCart();
   const inCart = () => cart.has(id);
   const [dishQuantity, setDishQuantity] = useState(quantity);
   const cartDispatch = useCartDispatch()!;
 
   const available = () => dishQuantity > 0;
-  const connected = () => user.hasOwnProperty("value");
+  const connected = () => user.hasOwnProperty("id");
 
   const decreaseFromCart = (
     _: React.MouseEvent<HTMLButtonElement, MouseEvent>

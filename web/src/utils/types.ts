@@ -31,3 +31,8 @@ export interface CustomIconButtonType {
   iconColor: string;
   isDisable?: boolean;
 }
+
+export interface User {
+  id: number;
+  info: string;
+}

@@ -25,7 +25,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({}) => {
       cacheOptions
       defaultOptions
       onChange={(value) => {
-        setUser({ ...value });
+        setUser({ id: value?.value, info: value?.label });
       }}
       loadOptions={promiseOptions}
     />
