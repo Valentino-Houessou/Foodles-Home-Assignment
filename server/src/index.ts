@@ -10,6 +10,8 @@ import { openDBConnection } from "./utils/database";
 const main = async () => {
   const conn = await openDBConnection();
 
+  await conn.synchronize();
+
   await conn.runMigrations();
 
   const app = express();
