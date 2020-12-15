@@ -15,7 +15,7 @@ const main = async () => {
   const app = express();
 
   //set up cors with express cors middleware
-  app.use(cors({ origin: "http://localhost:3000" }));
+  app.use(cors({ origin: config.frontend_url }));
 
   const apolloServer = new ApolloServer({
     schema: await createSchema(),
