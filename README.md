@@ -50,7 +50,9 @@ First enter the web directory, then:
 
 - Run the project in production environment (after the build): `yarn start`
 
+
 ## Summary
+
 I have developed the project in a node js environment. I prefer typescript over javascript mainly because it offers type.
 
 - For the backend I've used the following libraries:
