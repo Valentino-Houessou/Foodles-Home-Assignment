@@ -75,4 +75,6 @@ I use jest for testing.
 I assume there are users and products in the database at set up.
 I also assume that we need to register the history of what dishes users buy.
 
-If I have more time, I will write tests in the front
+If I have more time, 
+- I will write tests in the front
+- Add docker and docker compose to run the project more easily.
