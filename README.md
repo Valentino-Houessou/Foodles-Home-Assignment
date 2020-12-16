@@ -1,8 +1,8 @@
-### Foodles-Home-Assignment
+# Foodles-Home-Assignment
 
 ## Set up
 
-# Back:
+### Back:
 
 First enter the server directory, then:
 
@@ -31,7 +31,8 @@ First enter the server directory, then:
 - Test the project with: `yarn test`
 
 - Run the project in development environment with: `yarn dev`
-# Front:
+
+### Front:
 
 First enter the web directory, then:
 
@@ -49,28 +50,27 @@ First enter the web directory, then:
 
 - Run the project in production environment (after the build): `yarn start`
 
-## Summary:
+## Summary
+I have developed the project in a node js environment. I prefer typescript over javascript mainly because it offers type.
 
-I develop the project in a node js environement. I prefer typescript over javascript mainly because it offer type.
+- For the backend I've used the following libraries:
 
-- For the backend I use the following libraries:
-	- express: ligthweight node js middleware library to create API
-	- graphql: Query engine for API
-	- Appolo-server-express: Combine express and grapql to use the graphql schemas to request the api
-	- postgresql: for the database
-	- type-orm: To connect the database with the code.
-	- Type-graphql: To define the graphql schemas with class and decorator.
+  - express: lightweight node js middleware library to create API
+  - graphql: Query engine for API
+  - Appolo-server-express: Combine express and graphql to use the graphql schemas to request the api
+  - postgresql: for the database
+  - type-orm: To manage the database in the code.
+  - Type-graphql: To define the graphql schemas with class and decorator.
 
-- For the frontend I use the following libraries:
-	- Next js: A react framework
-	- Chakra UI: A component friendly css library
-	- Urql: An open source and single package graphql client that offer caching.
-	- graphql code generator: To generate types and hooks based on the backend graphql schema for the frontend.
-
+- For the frontend, I use the following libraries:
+  - Next js: A react framework
+  - Chakra UI: A component friendly css library
+  - Urql: An open-source and single package graphql client that offers caching.
+  - graphql code generator: To generate types and hooks based on the backend graphql schema for the frontend.
 
 I use jest for testing.
 
-I assume there are users and product in the database at set up.
-I also assume that we need to register the history of what dish users by.
+I assume there are users and products in the database at set up.
+I also assume that we need to register the history of what dishes users buy.
 
-If i have more time, i will write tests in the front
+If I have more time, I will write tests in the front
