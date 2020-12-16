@@ -51,7 +51,7 @@ First enter the web directory, then:
 - Run the project in production environment (after the build): `yarn start`
 
 
-## Summary
+## Summary
 
 I have developed the project in a node js environment. I prefer typescript over javascript mainly because it offers type.
 
