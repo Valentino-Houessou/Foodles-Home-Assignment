@@ -1,11 +1,13 @@
-import { config } from "dotenv";
-import { resolve } from "path";
-
-config({
-  path: resolve(__dirname, `../.env.${process.env.NODE_ENV || "development"}`),
+/* eslint-disable @typescript-eslint/no-var-requires */
+const path = require("path");
+require("dotenv").config({
+  path: path.resolve(
+    __dirname,
+    `../.env.${process.env.NODE_ENV || "development"}`,
+  ),
 });
 
-export default {
+module.exports = {
   development: {
     host: process.env.DB_HOST || "127.0.0.1",
     db: process.env.DB_DATABASE || "foodleDb",
