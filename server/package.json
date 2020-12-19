@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "tsc -w",
-    "dev": "cd dist && NODE_ENV=development node index.js",
+    "dev": "cd dist && NODE_ENV=development nodemon index.js",
     "start": "cd dist && NODE_ENV=production node index.js",
     "testdb:setup": "NODE_ENV=test ts-node ./test/utils/setup.ts",
     "test": "npm run testdb:setup && jest -c jest.config.js --detectOpenHandles"
