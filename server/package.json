@@ -5,13 +5,10 @@
   "main": "index.js",
   "scripts": {
     "watch": "tsc -w",
-    "dev2": "cd dist/src && NODE_ENV=development node index.js",
-    "dev": "cd src && NODE_ENV=development nodemon --exec ts-node index.ts -e ts,graphql",
-    "test-server": "cd src && NODE_ENV=test ts-node index.ts",
-    "start": "cd src && NODE_ENV=production ts-node index.ts",
+    "dev": "cd dist && NODE_ENV=development node index.js",
+    "start": "cd dist && NODE_ENV=production node index.js",
     "testdb:setup": "NODE_ENV=test ts-node ./test/utils/setup.ts",
-    "test": "npm run testdb:setup && jest -c jest.config.js --detectOpenHandles",
-    "test:watch": "npm run testdb:setup && jest -c jest.config.js --detectOpenHandles --watchAll"
+    "test": "npm run testdb:setup && jest -c jest.config.js --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
