@@ -13,6 +13,7 @@ export class ClientResolver {
       .getRepository(Client)
       .createQueryBuilder("l")
       .where("l.name ilike :name", { name: `%${name}%` })
+      .addOrderBy("l.name", "ASC")
       .take(limit);
 
     return searchQuery.getMany();
