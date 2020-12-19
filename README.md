@@ -20,7 +20,7 @@ First enter the server directory, then:
   - DB_PORT: The test database post
   - PORT: The web server port in test environment (must be different from the dev one)
   - BACK_END_URL: The back-end url
-  - BACK_END_URL: The front-end url
+  - FRONT_END_URL: The front-end url
 
 - Create the .env.development file for development environment variables and add the same environment variables as for test but with development environment value:
 
