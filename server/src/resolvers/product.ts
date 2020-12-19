@@ -16,7 +16,8 @@ export class ProductResolver implements ResolverInterface<Product> {
     const query = getConnection()
       .getRepository(Product)
       .createQueryBuilder("l")
-      .where("l.quantity > :quantity", { quantity: 0 });
+      .where("l.quantity > :quantity", { quantity: 0 })
+      .addOrderBy("l.id", "ASC");
 
     return query.getMany();
   }
