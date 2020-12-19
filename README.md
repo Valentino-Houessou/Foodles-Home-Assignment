@@ -28,6 +28,8 @@ First enter the server directory, then:
 
   - ...
 
+- Run ```yarn watch``` to create the dist folder
+
 - Test the project with: `yarn test`
 
 - Run the project in development environment with: `yarn dev`
