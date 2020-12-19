@@ -3,7 +3,7 @@ import cors from "cors";
 import express from "express";
 import path from "path";
 import "reflect-metadata";
-import config from "../config/common";
+import config from "./constants";
 import { createSchema } from "./utils/createSchema";
 import { openDBConnection } from "./utils/database";
 

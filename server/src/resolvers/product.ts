@@ -7,7 +7,7 @@ import {
 } from "type-graphql";
 import { getConnection } from "typeorm";
 import { Product } from "../entities/Product";
-import config from "../../config/common";
+import config from "../constants";
 
 @Resolver(() => Product)
 export class ProductResolver implements ResolverInterface<Product> {
