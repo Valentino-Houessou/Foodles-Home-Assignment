@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "tsc -w",
+    "build": "tsc -p tsconfig.build.json",
     "dev": "cd dist && NODE_ENV=development nodemon index.js",
     "start": "cd dist && NODE_ENV=production node index.js",
     "testdb:setup": "NODE_ENV=test ts-node ./test/utils/setup.ts",

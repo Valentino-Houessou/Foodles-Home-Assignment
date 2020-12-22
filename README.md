@@ -28,7 +28,7 @@ First enter the server directory, then:
 
   - ...
 
-- Run ```yarn watch``` to create the dist folder
+- Run ```yarn build``` to create the dist folder
 
 - Test the project with: `yarn test`
 
